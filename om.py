@@ -102,12 +102,12 @@ def get_service_info(server_name):
 def total_consumption_list(server_name):
     server_name_style(server_name)
     print(f"{Fore.LIGHTBLACK_EX}{'-' * 70}")
-    print(f"{Style.BRIGHT}{Fore.LIGHTCYAN_EX}{'Имя ключа':<25} {'Использовано (байт)':>20} {'Использовано (GB)':>20}")
+    print(f"{Style.BRIGHT}{Fore.LIGHTCYAN_EX}{'Имя ключа':<20} {'Использовано (GB)':>20} {'Использовано (байт)':>20}")
     print(f"{Fore.LIGHTBLACK_EX}{'-' * 70}")
     for key in all_keys():
         used = int(key.used_bytes) if key.used_bytes is not None else 0
         gb = bytes_to_gb(used)
-        print(f"{Fore.LIGHTWHITE_EX}{key.name:<25} {used:>20,} {gb:>20.2f}")
+        print(f"{Fore.LIGHTWHITE_EX}{key.name:<20} {gb:>20.4f} {used:>20,}")
     print(f"{Fore.LIGHTBLACK_EX}{'-' * 70}")
 
 def total_consumption_sum(server_name):
