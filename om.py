@@ -142,7 +142,7 @@ def main(func_name, server_name):
 # Точка входа
 if __name__ == "__main__":
     if '--help' in sys.argv or '-h' in sys.argv:
-        print(f"{Fore.CYAN}Использование: {Fore.LIGHTWHITE_EX}python om.py [c|u] [команда]")
+        print(f"{Fore.CYAN}Использование: {Fore.LIGHTWHITE_EX}om [c|u] [команда]")
         print(f"{Fore.CYAN}c - CentOS 7 сервер (vdsina.com)")
         print(f"{Fore.CYAN}u - Ubuntu 24 сервер (timeweb.cloud)")
         print(f"\n{Fore.CYAN}Доступные команды:\n")
@@ -151,7 +151,7 @@ if __name__ == "__main__":
         sys.exit(0)
 
     if len(sys.argv) < 3:
-        print(f"{Fore.RED}❌ Использование: {Fore.LIGHTWHITE_EX}python om.py [c|u] [команда]")
+        print(f"{Fore.RED}❌ Использование: {Fore.LIGHTWHITE_EX}om [c|u] [команда]")
         sys.exit(1)
 
     server_name = sys.argv[1]
