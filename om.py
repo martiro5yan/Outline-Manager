@@ -16,8 +16,8 @@ load_dotenv(config_path)
 # Константы API
 CENTOS_API_URL = os.getenv("CENTOS_API_URL")
 CENTOS_CERT_SHA256 = os.getenv("CENTOS_CERT_SHA256")
-UBUNTU_API_URL = os.getenv("Ubuntu_API_URL")
-UBUNTU_CERT_SHA256 = os.getenv("Ubuntu_CERT_SHA256")
+UBUNTU_API_URL = os.getenv("UBUNTU_API_URL")
+UBUNTU_CERT_SHA256 = os.getenv("UBUNTU_CERT_SHA256")
 
 # Справка по командам
 help_descriptions = dict_file.help_descriptions
