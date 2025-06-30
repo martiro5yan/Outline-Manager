@@ -104,11 +104,6 @@ def delete_key(server_name):
     outline_manager.delete_key(key_id)
     print(f"{Fore.GREEN}🗑️ Ключ {key_id} успешно удалён.")
 
-def stop_key(server_name):
-    key_id = input(f"{Fore.CYAN}ID ключа для отключения: {Fore.YELLOW}")
-    outline_manager.set_key_enabled(key_id, enabled=False)
-    print(f"{Fore.LIGHTGREEN_EX}Ключ отключён.")
-
 def get_service_info(server_name):
     server_name_style(server_name)
     info = outline_manager.get_server_information()
