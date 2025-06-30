@@ -3,7 +3,7 @@ import os
 import sys
 from dotenv import load_dotenv
 from outline_vpn.outline_vpn import OutlineVPN, OutlineServerErrorException
-from colorama import Fore, Style, init
+from colorama import Fore, Style, init, Back
 import dict_file
 import db
 
