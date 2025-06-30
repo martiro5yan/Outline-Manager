@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from outline_vpn.outline_vpn import OutlineVPN, OutlineServerErrorException
 from colorama import Fore, Style, init
 import dict_file
+import db
 
 # Инициализация colorama
 init(autoreset=True)
@@ -21,7 +22,17 @@ UBUNTU_CERT_SHA256 = os.getenv("UBUNTU_CERT_SHA256")
 
 # Справка по командам
 help_descriptions = dict_file.help_descriptions
-
+def server_name_style(server_name):
+    if server_name == 'c':
+        host = 'vdsina.com'
+        server_os = 'CentOS 7'
+    elif server_name == 'u':
+        host = 'timeweb.cloud'
+        server_os = 'Ubuntu 24'
+    else:
+        host = 'Неизвестно'
+        server_os = 'N/A'
+    print(f"{Back.BLACK}{Fore.WHITE}{host} -- {server_os}")
 # Инициализация OutlineVPN менеджера
 def init_outline_manager(server_name):
     if server_name == 'u':
@@ -36,26 +47,29 @@ def init_outline_manager(server_name):
 def bytes_to_gb(bytes_val):
     return bytes_val / (1024 ** 3) if isinstance(bytes_val, int) else 0
 
-def server_name_style(server_name):
-    if server_name == 'c':
-        host = 'vdsina.com'
-        server_os = 'CentOS 7'
-    elif server_name == 'u':
-        host = 'timeweb.cloud'
-        server_os = 'Ubuntu 24'
-    else:
-        host = 'Неизвестно'
-        server_os = 'N/A'
-    print(f"{Style.BRIGHT}{Fore.LIGHTWHITE_EX}{host} — {Fore.CYAN}{server_os}")
+def user_info(id):
+    user = db.get_user_by_username(id)
+    username = f"{Style.BRIGHT}{Fore.CYAN}Пользователь: {Fore.LIGHTWHITE_EX}{user[2]} {user[3]}\n"
+    start_subscription = db.human_readable_date(user[4])
+    end_subscription = db.human_readable_date(user[5])
+    subscription = f"{Style.BRIGHT}{Fore.CYAN}Период подписки: {Fore.BLUE}{start_subscription} : {end_subscription}"
+
+    line = username + subscription
+    return line
+
 
 def all_keys():
     return outline_manager.get_keys()
 
 def client_info(key):
-    print(f"{Style.BRIGHT}{Fore.CYAN}ID ключа:        {Fore.LIGHTWHITE_EX}{key.key_id}")
-    print(f"{Style.BRIGHT}{Fore.CYAN}Имя ключа:       {Fore.LIGHTWHITE_EX}{key.name}")
-    print(f"{Style.BRIGHT}{Fore.CYAN}Использовано:    {Fore.BLUE}{bytes_to_gb(key.used_bytes):.2f} GB")
-    print(f"{Style.BRIGHT}{Fore.CYAN}Ключ доступа:    {Fore.GREEN}{key.access_url}")
+    """Печатает информацию о конкретном ключе"""
+    if db.user_exists(key.key_id):
+        print(user_info(key.key_id))
+
+    print(f"{Style.BRIGHT}{Fore.CYAN}ID ключа: {Fore.LIGHTWHITE_EX}{key.key_id}")
+    print(f"{Style.BRIGHT}{Fore.CYAN}Имя ключа: {Fore.LIGHTWHITE_EX}{key.name}")
+    print(f"{Style.BRIGHT}{Fore.CYAN}Использовано: {Fore.BLUE}{bytes_to_gb(key.used_bytes):.2f} GB")
+    print(f"{Style.BRIGHT}{Fore.CYAN}Ключ: {Fore.GREEN}{key.access_url}")
 
 # Основные команды
 def list_keys(server_name):
@@ -68,7 +82,8 @@ def list_keys(server_name):
 def inspect_key(server_name):
     server_name_style(server_name)
     try:
-        key_id = input(f"{Style.BRIGHT}{Fore.CYAN}ID Ключа: {Fore.YELLOW}")
+        key_id = input(f"{Style.BRIGHT + Fore.CYAN}ID Ключа: {Fore.WHITE}")
+        print()
         key = outline_manager.get_key(key_id)
         client_info(key)
     except OutlineServerErrorException:
@@ -122,7 +137,7 @@ def total_consumption_all(server_name):
 # Словарь команд
 dictionary_commands = {
     'lk': list_keys,
-    'ci': inspect_key,
+    'ki': inspect_key,
     'ck': create_new_key,
     'dk': delete_key,
     'info': get_service_info,
