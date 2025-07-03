@@ -55,7 +55,7 @@ def user_info(id):
     subscription = f"{Style.BRIGHT}{Fore.CYAN}Период подписки: {Fore.BLUE}{start_subscription} : {end_subscription}"
 
     print(username + subscription)
-    print(f"Ключ в БД: {user[6]}")
+    print(f"{Style.BRIGHT}{Fore.CYAN}Ключ в БД: {Fore.GREEN}{user[6]}")
 
 
 def all_keys():
