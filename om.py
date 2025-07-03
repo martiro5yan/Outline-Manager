@@ -54,8 +54,8 @@ def user_info(id):
     end_subscription = db.human_readable_date(user[5])
     subscription = f"{Style.BRIGHT}{Fore.CYAN}Период подписки: {Fore.BLUE}{start_subscription} : {end_subscription}"
 
-    line = username + subscription
-    return line
+    print(username + subscription)
+    print(f"Ключ в БД: {user[6]}")
 
 
 def all_keys():
@@ -64,7 +64,9 @@ def all_keys():
 def client_info(key):
     """Печатает информацию о конкретном ключе"""
     if db.user_exists(key.key_id):
-        print(user_info(key.key_id))
+        user_info(key.key_id)
+    else:
+        print(f"{Style.BRIGHT}{Fore.RED}Пробный ключ")
 
     print(f"{Style.BRIGHT}{Fore.CYAN}ID ключа: {Fore.LIGHTWHITE_EX}{key.key_id}")
     print(f"{Style.BRIGHT}{Fore.CYAN}Имя ключа: {Fore.LIGHTWHITE_EX}{key.name}")
