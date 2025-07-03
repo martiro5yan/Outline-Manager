@@ -95,7 +95,7 @@ def create_new_key(server_name):
     name = input(f"{Fore.CYAN}Введите название ключа: {Fore.YELLOW}")
     key_id = input(f"{Fore.CYAN}Введите ID ключа: {Fore.YELLOW}")
     key = outline_manager.create_key(key_id=key_id, name=name)
-    print(f"{Fore.GREEN}✅ Ключ создан! Ссылка доступа: {Style.BRIGHT}{key.access_url}")
+    print(f"{Fore.GREEN}✅ Ключ создан! Ссылка доступа: {Style.BRIGHT}{key.access_url+'#@vpnyt_bot'}")
 
 def delete_key(server_name):
     server_name_style(server_name)
